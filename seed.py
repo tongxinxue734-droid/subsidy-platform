@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """种子数据：三级监管账号 + 大规模脱敏老人档案 + 发放台账 + 通知公告（幂等）"""
+import os
+
 import bcrypt
 from sqlalchemy.orm import Session
 
@@ -8,8 +10,8 @@ from models import (User, Elder, PaymentRecord, Notice, CertifyRecord, ElderPaym
                     Application, ElderChange, WorkOrder, CompareTask, AuditLog, Message)
 from services import generator
 
-# 受益老人档案条数（演示大数据量）
-ELDER_TOTAL = 100000
+# 受益老人档案条数（演示大数据量）；可通过环境变量 ELDER_TOTAL 调整，云端免费额度建议 10000
+ELDER_TOTAL = int(os.environ.get("ELDER_TOTAL", "100000"))
 
 
 def hash_pw(pw: str) -> str:

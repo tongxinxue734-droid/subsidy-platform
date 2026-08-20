@@ -5,6 +5,7 @@ from typing import Optional
 import bcrypt
 import jwt
 import time
+import secrets
 from fastapi import FastAPI, Depends, HTTPException, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -234,7 +235,7 @@ def apply(req: ApplyRequest, user: User = Depends(get_current_user), s: Session 
     channel = req.channel or "线上小程序"
     # 市级/区县账号直接进入区县审批，街道账号需先街道审核
     status = "待区县审批" if user.role_level in (1, 2) else "待街道审核"
-    apply_no = "SQ" + datetime.now().strftime("%Y%m%d") + str(random.randint(1000, 9999))
+    apply_no = "SQ" + datetime.now().strftime("%Y%m%d") + str(secrets.randbelow(100000)).zfill(5)
     s.add(Application(apply_no=apply_no, district=district, street=street,
                       name=mask_name(req.gender), gender=req.gender,
                       age_band=req.age_band, standard=standard, channel=channel,
@@ -672,7 +673,7 @@ def enroll_workorder(wid: int, user: User = Depends(get_current_user), s: Sessio
         raise HTTPException(404, "工单不存在")
     standard = next((x["补贴标准"] for x in config.SUBSIDY_STANDARDS
                      if x["年龄段"] == w.age_band), "50 元/月")
-    apply_no = "SQ" + datetime.now().strftime("%Y%m%d") + str(random.randint(1000, 9999))
+    apply_no = "SQ" + datetime.now().strftime("%Y%m%d") + str(secrets.randbelow(100000)).zfill(5)
     s.add(Application(apply_no=apply_no, district=w.district, street=w.street, name=w.name,
                       gender=w.gender, age_band=w.age_band, standard=standard,
                       channel="政策找人主动服务", status="待区县审批", elder_id=0))
@@ -701,7 +702,7 @@ def run_compare(user: User = Depends(get_current_user), s: Session = Depends(get
     import random
     from datetime import datetime
     source = random.choice(["公安户籍", "卫健死亡", "殡葬火化", "社保"])
-    compared = random.randint(5000, 20000)
+    compared = secrets.randbelow(15000) + 5000
     hit = int(compared * random.uniform(0.002, 0.02))
     task_no = "BD-RUN-" + datetime.now().strftime("%H%M%S")
     s.add(CompareTask(task_no=task_no, source=source, district=user.district,
@@ -762,7 +763,7 @@ def report(req: ReportRequest, user: User = Depends(get_current_user), s: Sessio
     content = req.content.strip()
     if not content:
         raise HTTPException(400, "举报内容不能为空")
-    work_no = "SS" + datetime.now().strftime("%Y%m%d") + str(random.randint(100, 999))
+    work_no = "SS" + datetime.now().strftime("%Y%m%d") + str(secrets.randbelow(1000)).zfill(3)
     s.add(WorkOrder(work_no=work_no, category="诉求", source="平台举报",
                     district=user.district, street=user.street, name="",
                     title="平台举报", description=content, level="黄色", status="待处理"))
@@ -1208,7 +1209,7 @@ def spotcheck_result(rid: int, req: SpotResultRequest, user: User = Depends(get_
     r.result = req.result
     if req.result == "发现问题":
         elder = s.query(Elder).get(r.elder_id) if r.elder_id else None
-        work_no = "JC" + datetime.now().strftime("%Y%m%d%H%M%S") + str(random.randint(10, 99))
+        work_no = "JC" + datetime.now().strftime("%Y%m%d%H%M%S") + str(secrets.randbelow(100)).zfill(2)
         s.add(WorkOrder(work_no=work_no, category="稽核", source="双随机抽查", elder_id=r.elder_id,
                         district=r.district, street=elder.street if elder else "", name=r.name,
                         title="双随机抽查发现问题",

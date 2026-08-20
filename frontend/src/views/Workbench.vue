@@ -9,7 +9,6 @@
         <el-button type="primary" @click="router.push('/applications')">+ 新增申领</el-button>
         <el-button @click="router.push('/spotcheck')">发起抽查</el-button>
         <el-button @click="router.push('/workorders')">工单督办</el-button>
-        <el-button @click="router.push('/bigscreen')">数据大屏</el-button>
       </div>
     </div>
 

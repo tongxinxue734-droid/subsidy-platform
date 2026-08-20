@@ -104,7 +104,6 @@ const roleTagType = computed(() => ({ 1: 'danger', 2: 'warning', 3: 'info' }[use
 const menuGroups = [
   { path: '/workbench', title: '工作台', icon: 'HomeFilled', roles: [1, 2, 3] },
   { path: '/dashboard', title: '监管驾驶舱', icon: 'Odometer', roles: [1, 2, 3] },
-  { path: '/bigscreen', title: '数据大屏', icon: 'Monitor', roles: [1] },
   {
     title: '业务经办', icon: 'FolderOpened', roles: [1, 2, 3], children: [
       { path: '/applications', title: '申领审核', icon: 'EditPen' },
@@ -117,7 +116,6 @@ const menuGroups = [
   {
     title: '监管稽核', icon: 'Aim', roles: [1, 2, 3], children: [
       { path: '/audit', title: '智能稽核', icon: 'Warning' },
-      { path: '/risk', title: '风险画像', icon: 'DataLine' },
       { path: '/spotcheck', title: '双随机抽查', icon: 'Refresh' },
       { path: '/workorders', title: '工单督办', icon: 'Tickets' }
     ]

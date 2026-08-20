@@ -16,7 +16,6 @@ const routes = [
       { path: 'payments', component: () => import('../views/Payments.vue'), meta: { title: '发放管理' } },
       { path: 'fund', component: () => import('../views/Fund.vue'), meta: { title: '资金监管' } },
       { path: 'audit', component: () => import('../views/Audit.vue'), meta: { title: '智能稽核' } },
-      { path: 'risk', component: () => import('../views/Risk.vue'), meta: { title: '风险画像' } },
       { path: 'spotcheck', component: () => import('../views/SpotCheck.vue'), meta: { title: '双随机抽查' } },
       { path: 'workorders', component: () => import('../views/WorkOrders.vue'), meta: { title: '工单督办' } },
       { path: 'analysis', component: () => import('../views/Analysis.vue'), meta: { title: '统计分析' } },
@@ -25,7 +24,6 @@ const routes = [
       { path: 'admin', component: () => import('../views/Admin.vue'), meta: { title: '系统管理' } }
     ]
   },
-  { path: '/bigscreen', component: () => import('../views/BigScreen.vue'), meta: { title: '数据大屏' } },
   { path: '/:pathMatch(.*)*', redirect: '/workbench' }
 ]
 

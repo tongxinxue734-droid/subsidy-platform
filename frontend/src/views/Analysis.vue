@@ -1,43 +1,28 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">各区县受益老人分布</div>
-          <div ref="districtRef" class="chart" style="height:340px"></div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="12">
+      <el-col :span="12">
         <div class="panel">
           <div class="panel-title">年龄段 × 区县交叉分析</div>
           <div ref="crossRef" class="chart" style="height:340px"></div>
         </div>
       </el-col>
-    </el-row>
-
-    <el-row :gutter="16" style="margin-top:16px">
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">年龄结构</div>
-          <div ref="ageRef" class="chart" style="height:300px"></div>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="12">
+      <el-col :span="12">
         <div class="panel">
           <div class="panel-title">性别结构</div>
-          <div ref="genderRef" class="chart" style="height:300px"></div>
+          <div ref="genderRef" class="chart" style="height:340px"></div>
         </div>
       </el-col>
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :xs="24" :md="8">
+      <el-col :span="8">
         <div class="panel">
           <div class="panel-title">申领渠道分布</div>
           <div ref="channelRef" class="chart" style="height:300px"></div>
         </div>
       </el-col>
-      <el-col :xs="24" :md="16">
+      <el-col :span="16">
         <div class="panel">
           <div class="panel-title">未来 5 年高龄人口与资金需求预测</div>
           <div ref="projectRef" class="chart" style="height:300px"></div>
@@ -53,9 +38,7 @@ import * as echarts from 'echarts'
 import request from '../api'
 import { CHART } from '../utils/palette'
 
-const districtRef = ref()
 const crossRef = ref()
-const ageRef = ref()
 const genderRef = ref()
 const channelRef = ref()
 const projectRef = ref()
@@ -72,17 +55,6 @@ function safeInit(el) {
 onMounted(async () => {
   const data = await request.get('/analysis')
   if (disposed) return
-
-  const district = safeInit(districtRef.value)
-  if (district) {
-    district.setOption({
-      grid: { left: 90, right: 20, top: 10, bottom: 30 },
-      tooltip: { trigger: 'axis' },
-      xAxis: { type: 'value' },
-      yAxis: { type: 'category', data: data.district_dist.map(d => d.name).reverse() },
-      series: [{ type: 'bar', data: data.district_dist.map(d => d.value).reverse(), itemStyle: { color: CHART.primary, borderRadius: [0, 4, 4, 0] } }]
-    })
-  }
 
   const districts = data.district_dist.map(d => d.name)
   const ageBands = [...new Set(data.cross.map(c => c.age_band))]
@@ -103,14 +75,6 @@ onMounted(async () => {
       xAxis: { type: 'category', data: districts, axisLabel: { rotate: 45 } },
       yAxis: { type: 'value' },
       series: crossSeries
-    })
-  }
-
-  const age = safeInit(ageRef.value)
-  if (age) {
-    age.setOption({
-      tooltip: { trigger: 'item' },
-      series: [{ type: 'pie', radius: ['40%', '65%'], data: data.age_structure, color: CHART.ageBands }]
     })
   }
 
