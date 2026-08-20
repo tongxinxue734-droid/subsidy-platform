@@ -24,7 +24,7 @@
     </div>
 
     <el-row :gutter="16">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">申领补贴及发放流程</div>
           <div class="tip">线上渠道：{{ channels.join('、') }}；线下持身份证、户口簿到村（居）委会申请</div>
@@ -33,7 +33,7 @@
           </el-steps>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">资金来源（省/市/区县分担）</div>
           <el-table :data="fundSources" border stripe size="small">

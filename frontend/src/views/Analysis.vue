@@ -1,13 +1,13 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">各区县受益老人分布</div>
           <div ref="districtRef" class="chart" style="height:340px"></div>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">年龄段 × 区县交叉分析</div>
           <div ref="crossRef" class="chart" style="height:340px"></div>
@@ -16,13 +16,13 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">年龄结构</div>
           <div ref="ageRef" class="chart" style="height:300px"></div>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">性别结构</div>
           <div ref="genderRef" class="chart" style="height:300px"></div>
@@ -31,13 +31,13 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel">
           <div class="panel-title">申领渠道分布</div>
           <div ref="channelRef" class="chart" style="height:300px"></div>
         </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :xs="24" :md="16">
         <div class="panel">
           <div class="panel-title">未来 5 年高龄人口与资金需求预测</div>
           <div ref="projectRef" class="chart" style="height:300px"></div>

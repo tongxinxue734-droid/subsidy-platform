@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :span="6" v-for="k in kpis" :key="k.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
         <div class="stat-card">
           <div class="stat-label">{{ k.label }}</div>
           <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
@@ -11,14 +11,14 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel" style="display:flex; flex-direction:column; align-items:center">
           <div class="panel-title" style="align-self:flex-start">年度认证进度</div>
           <el-progress type="dashboard" :percentage="certRate" :color="certRate >= 90 ? '#67c23a' : certRate >= 80 ? '#e6a23c' : '#f56c6c'" />
           <div style="color:#909399; font-size:13px; margin-top:6px">已完成年度资格认证 · 每年一次</div>
         </div>
       </el-col>
-      <el-col :span="16">
+      <el-col :xs="24" :md="16">
         <div class="panel">
           <div class="panel-title">最近认证记录</div>
           <el-table :data="recentRecords" border stripe size="small" max-height="220">
@@ -34,13 +34,13 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="14">
+      <el-col :xs="24" :md="14">
         <div class="panel">
           <div class="panel-title">各区县复审率</div>
           <div ref="distRef" class="chart" style="height:320px"></div>
         </div>
       </el-col>
-      <el-col :span="10">
+      <el-col :xs="24" :md="10">
         <div class="panel">
           <div class="panel-title">认证方式分布</div>
           <div ref="methodRef" class="chart" style="height:320px"></div>

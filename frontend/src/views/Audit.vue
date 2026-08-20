@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :span="6" v-for="a in alertCards" :key="a.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="a in alertCards" :key="a.label">
         <div class="stat-card">
           <div class="stat-label">{{ a.label }}</div>
           <div class="stat-value" :style="{ color: a.color }">{{ a.value }}</div>
@@ -11,7 +11,7 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">疑点类型与预警分级</div>
           <el-table :data="suspectTypes" border stripe size="small">
@@ -25,7 +25,7 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">资金发放问题整改情况</div>
           <el-table :data="rectifications" border stripe size="small">

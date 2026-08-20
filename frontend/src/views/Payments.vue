@@ -1,14 +1,14 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="stat-card">
           <div class="stat-label">累计发放金额</div>
           <div class="stat-value" style="color:#409eff">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
           <div class="stat-sub">台账范围内</div>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="stat-card">
           <div class="stat-label">累计受益人次</div>
           <div class="stat-value" style="color:#67c23a">{{ totalCount.toLocaleString() }}</div>

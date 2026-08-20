@@ -32,9 +32,10 @@ ACCOUNTS = [
 
 def _seed_accounts(session: Session):
     if session.query(User).count() == 0:
+        from services.mask import mask_operator_name
         for username, pw, name, level, district, street, dept in ACCOUNTS:
             session.add(User(
-                username=username, password_hash=hash_pw(pw), name=name,
+                username=username, password_hash=hash_pw(pw), name=mask_operator_name(name),
                 role_level=level, district=district, street=street, dept_name=dept,
             ))
         session.commit()

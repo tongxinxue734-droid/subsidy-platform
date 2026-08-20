@@ -1,9 +1,9 @@
 <template>
   <el-container class="layout">
-    <el-aside width="220px" class="aside">
+    <el-aside :width="isCollapse ? '64px' : '220px'" class="aside">
       <div class="logo">
         <div class="logo-icon">🏛️</div>
-        <div class="logo-text">
+        <div class="logo-text" v-show="!isCollapse">
           <div class="logo-title">西安市高龄补贴</div>
           <div class="logo-sub">监管平台</div>
         </div>
@@ -11,6 +11,7 @@
       <el-menu
         :default-active="activeMenu"
         :default-openeds="openeds"
+        :collapse="isCollapse"
         router
         background-color="#001529"
         text-color="rgba(255,255,255,0.68)"
@@ -39,6 +40,10 @@
     <el-container>
       <el-header class="header">
         <div class="header-left">
+          <el-icon class="collapse-btn" :size="20" @click="toggleCollapse">
+            <Fold v-if="!isCollapse" />
+            <Expand v-else />
+          </el-icon>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>西安市高龄补贴监管平台</el-breadcrumb-item>
             <el-breadcrumb-item>{{ currentTitle }}</el-breadcrumb-item>
@@ -149,6 +154,9 @@ const openeds = computed(() => visibleMenus.value.filter(g => g.children).map(g 
 const unreadCount = ref(0)
 const todoCount = ref(0)
 
+const isCollapse = ref(window.innerWidth < 768)
+function toggleCollapse() { isCollapse.value = !isCollapse.value }
+
 const searchText = ref('')
 async function searchSuggestions(q, cb) {
   if (!q) { cb([]); return }
@@ -186,7 +194,7 @@ function logout() {
 <style scoped>
 .layout { height: 100vh; }
 .aside { background: #001529; overflow: hidden; display: flex; flex-direction: column; }
-.logo { height: 60px; display: flex; align-items: center; padding: 0 16px; background: #002140; flex-shrink: 0; }
+.logo { height: 60px; display: flex; align-items: center; justify-content: center; padding: 0 16px; background: #002140; flex-shrink: 0; }
 .logo-icon { font-size: 26px; margin-right: 10px; }
 .logo-text { color: #fff; }
 .logo-title { font-size: 14px; font-weight: 600; }
@@ -196,6 +204,8 @@ function logout() {
   background: #fff; display: flex; align-items: center; justify-content: space-between;
   box-shadow: 0 1px 4px rgba(0,21,41,0.08); padding: 0 20px;
 }
+.collapse-btn { cursor: pointer; color: #606266; flex-shrink: 0; }
+.collapse-btn:hover { color: #409eff; }
 .header-left { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
 .search-box { width: 280px; }
 .header-right { display: flex; align-items: center; gap: 14px; }

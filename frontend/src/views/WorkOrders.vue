@@ -4,7 +4,7 @@
       <!-- 工单中心 -->
       <el-tab-pane label="工单中心" name="orders">
         <el-row :gutter="16">
-          <el-col :span="6" v-for="k in kpis" :key="k.label">
+          <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
             <div class="stat-card">
               <div class="stat-label">{{ k.label }}</div>
               <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>

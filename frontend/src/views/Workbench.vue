@@ -14,7 +14,7 @@
     </div>
 
     <el-row :gutter="16">
-      <el-col :span="6" v-for="k in kpis" :key="k.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
         <div class="stat-card clickable" @click="k.link && router.push(k.link)">
           <div class="stat-label">{{ k.label }}</div>
           <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
@@ -24,7 +24,7 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">
             待审申领
@@ -38,7 +38,7 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">
             待复审老人
@@ -55,7 +55,7 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">
             待处理工单
@@ -69,7 +69,7 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :md="12">
         <div class="panel">
           <div class="panel-title">
             未读消息

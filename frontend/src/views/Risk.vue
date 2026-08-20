@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <el-row :gutter="16">
-      <el-col :span="4" v-for="k in kpis" :key="k.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
         <div class="stat-card">
           <div class="stat-label">{{ k.label }}</div>
           <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
@@ -11,19 +11,19 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel">
           <div class="panel-title">疑点类型分布</div>
           <div ref="typeRef" class="chart" style="height:300px"></div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel">
           <div class="panel-title">风险分数段分布</div>
           <div ref="scoreRef" class="chart" style="height:300px"></div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel">
           <div class="panel-title">年龄段风险分布</div>
           <div ref="ageRef" class="chart" style="height:300px"></div>
@@ -32,13 +32,13 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="10">
+      <el-col :xs="24" :md="10">
         <div class="panel">
           <div class="panel-title">区县高风险人数排行</div>
           <div ref="districtRef" class="chart" style="height:360px"></div>
         </div>
       </el-col>
-      <el-col :span="14">
+      <el-col :xs="24" :md="14">
         <div class="panel">
           <div class="panel-title">风险评分规则</div>
           <el-table :data="rules" border size="small">

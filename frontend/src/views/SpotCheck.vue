@@ -15,7 +15,7 @@
     </div>
 
     <el-row :gutter="16">
-      <el-col :span="9">
+      <el-col :xs="24" :md="9">
         <div class="panel">
           <div class="panel-title">抽查任务</div>
           <el-table :data="tasks" border stripe size="small" highlight-current-row empty-text="暂无抽查任务，请先发起抽查" @current-change="onSelectTask">
@@ -28,7 +28,7 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="15">
+      <el-col :xs="24" :md="15">
         <div class="panel">
           <div class="panel-title">抽查记录 <span v-if="currentTask" style="color:#909399; font-size:12px; font-weight:400">（{{ currentTask.task_no }}）</span></div>
           <el-table :data="records" border stripe size="small" max-height="420" empty-text="请选择左侧任务查看抽查记录">

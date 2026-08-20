@@ -11,7 +11,7 @@
       </template>
     </el-alert>
     <el-row :gutter="16">
-      <el-col :span="6" v-for="k in kpis" :key="k.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
         <div class="kpi-card" :style="{ '--c': k.color }">
           <div class="kpi-icon">{{ k.icon }}</div>
           <div class="kpi-body">
@@ -24,7 +24,7 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="6" v-for="a in alertCards" :key="a.label">
+      <el-col :xs="24" :sm="12" :md="6" v-for="a in alertCards" :key="a.label">
         <div class="kpi-card clickable" :style="{ '--c': a.color }" @click="goAudit">
           <div class="kpi-icon">{{ a.icon }}</div>
           <div class="kpi-body">
@@ -37,13 +37,13 @@
     </el-row>
 
     <el-row :gutter="16" style="margin-top:16px">
-      <el-col :span="16">
+      <el-col :xs="24" :md="16">
         <div class="panel">
           <div class="panel-title">月度发放趋势</div>
           <div ref="trendRef" class="chart" style="height:320px"></div>
         </div>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :md="8">
         <div class="panel">
           <div class="panel-title">受益老人年龄结构</div>
           <div ref="ageRef" class="chart" style="height:320px"></div>

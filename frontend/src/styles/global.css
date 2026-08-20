@@ -40,3 +40,12 @@ body {
   background: linear-gradient(180deg, #409eff, #66b1ff); margin-right: 10px;
 }
 .chart { width: 100%; }
+
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .page-container { padding: 8px; }
+  .el-main { padding: 8px !important; }
+  .search-box { display: none; }
+  .user-dept { display: none; }
+}

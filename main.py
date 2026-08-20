@@ -797,9 +797,10 @@ def add_user(req: UserRequest, user: User = Depends(get_current_user), s: Sessio
     if user.role_level != 1:
         raise HTTPException(403, "仅市级账号可管理用户")
     import bcrypt as _bcrypt
+    from services.mask import mask_operator_name
     s.add(User(username=req.username,
                password_hash=_bcrypt.hashpw(req.password.encode(), _bcrypt.gensalt()).decode(),
-               name=req.name, role_level=req.role_level, district=req.district,
+               name=mask_operator_name(req.name), role_level=req.role_level, district=req.district,
                street=req.street, dept_name=req.dept_name, active=True))
     log_action(s, user, "新增用户", req.username)
     s.commit()

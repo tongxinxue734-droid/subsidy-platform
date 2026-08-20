@@ -4,14 +4,14 @@
       <!-- 资金监管 -->
       <el-tab-pane label="资金监管" name="fund">
         <el-row :gutter="16">
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="stat-card">
               <div class="stat-label">累计发放金额</div>
               <div class="stat-value" style="color:#409eff">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
               <div class="stat-sub">财政分级负担</div>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="stat-card">
               <div class="stat-label">覆盖区县</div>
               <div class="stat-value" style="color:#67c23a">{{ districtFund.length }}</div>
@@ -21,7 +21,7 @@
         </el-row>
 
         <el-row :gutter="16" style="margin-top:16px">
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="panel">
               <div class="panel-title">市、区县财政分担比例</div>
               <el-table :data="splitGroups" border stripe size="small">
@@ -38,7 +38,7 @@
               </el-table>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="panel">
               <div class="panel-title">各区县资金拨付情况</div>
               <div ref="fundRef" class="chart" style="height:420px"></div>
@@ -51,28 +51,28 @@
       <el-tab-pane label="绩效评价" name="performance">
         <el-alert title="预算执行率为演示参考值；及时到账率按区县整改情况动态计算" type="info" show-icon :closable="false" style="margin-bottom:16px" />
         <el-row :gutter="16">
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="6">
             <div class="stat-card">
               <div class="stat-label">累计发放金额</div>
               <div class="stat-value" style="color:#409eff">{{ (perf.total_amount / 10000).toFixed(2) }} 亿元</div>
               <div class="stat-sub">近 {{ perf.months }} 个月</div>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="6">
             <div class="stat-card">
               <div class="stat-label">月均发放</div>
               <div class="stat-value" style="color:#e6a23c">{{ perf.avg_month }} 万元</div>
               <div class="stat-sub">全市月均</div>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="6">
             <div class="stat-card">
               <div class="stat-label">预算执行率</div>
               <div class="stat-value" style="color:#67c23a">{{ perf.exec_rate }}%</div>
               <div class="stat-sub">执行进度</div>
             </div>
           </el-col>
-          <el-col :span="6">
+          <el-col :xs="24" :sm="12" :md="6">
             <div class="stat-card">
               <div class="stat-label">及时到账率</div>
               <div class="stat-value" style="color:#f56c6c">{{ perf.on_time_rate }}%</div>
@@ -82,7 +82,7 @@
         </el-row>
 
         <el-row :gutter="16" style="margin-top:16px">
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="panel">
               <div class="panel-title">全市发放汇总</div>
               <el-table :data="cityStats" border stripe size="small">
@@ -96,7 +96,7 @@
               </el-table>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :xs="24" :md="12">
             <div class="panel">
               <div class="panel-title">资金发放问题整改</div>
               <el-table :data="rectifications" border stripe size="small">
