@@ -50,4 +50,15 @@ body {
   .user-dept { display: none; }
   .el-header { padding: 0 10px !important; }
   .el-breadcrumb { display: none; }
+
+  /* 表格横向滚动，避免文字竖排堆叠 */
+  .el-table { min-width: 100%; }
+  .el-table__inner-wrapper { overflow-x: auto; }
+  .el-table__body, .el-table__header { min-width: 600px; }
+
+  /* 按钮加大触摸区域 */
+  .el-button { min-height: 40px; padding: 10px 14px; }
+
+  /* 图表最小高度，避免堆叠看不清 */
+  .chart { min-height: 240px; }
 }

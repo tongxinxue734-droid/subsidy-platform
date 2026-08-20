@@ -1,5 +1,6 @@
 <template>
   <div class="bigscreen">
+    <div class="bs-mobile-tip">📱 数据大屏请在电脑或横屏模式下查看</div>
     <div class="bs-header">
       <div class="bs-title">🏛️ 西安市高龄补贴监管平台 · 数据大屏</div>
       <div class="bs-time">{{ now }}</div>
@@ -211,6 +212,14 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.bs-mobile-tip {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: #050f22; color: #4fd1ff; font-size: 16px;
+  align-items: center; justify-content: center; text-align: center; padding: 20px;
+}
+@media (max-width: 768px) {
+  .bs-mobile-tip { display: flex; }
+}
 .bigscreen {
   height: 100vh; display: flex; flex-direction: column; overflow: hidden;
   background: radial-gradient(circle at 50% 0%, #0e2a55 0%, #081833 55%, #050f22 100%);
