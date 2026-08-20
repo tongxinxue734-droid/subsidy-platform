@@ -13,10 +13,9 @@ services:
       - key: DEEPSEEK_API_KEY
         value: ""
 
-  # 前端 Vue（静态站点）
+  # 前端 Vue（静态站点，免费，无需 plan）
   - type: web
     name: subsidy-frontend
-    plan: free
     runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: frontend/dist
