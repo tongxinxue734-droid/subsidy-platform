@@ -7,7 +7,7 @@
           <div class="logo-title">西安市高龄补贴</div>
           <div class="logo-sub">监管平台</div>
         </div>
-        <el-icon class="logo-collapse" :size="18" @click="toggleCollapse">
+        <el-icon class="logo-collapse" :size="24" @click="toggleCollapse">
           <Fold v-if="!isCollapse" />
           <Expand v-else />
         </el-icon>
@@ -195,7 +195,8 @@ function logout() {
 .layout { height: 100vh; }
 .aside { background: #001529; overflow: hidden; display: flex; flex-direction: column; }
 .logo { height: 60px; display: flex; align-items: center; padding: 0 16px; background: #002140; flex-shrink: 0; }
-.logo-collapse { cursor: pointer; color: rgba(255,255,255,0.75); margin-left: auto; padding: 6px; flex-shrink: 0; }
+.logo-collapse { cursor: pointer; color: rgba(255,255,255,0.85); margin-left: auto; padding: 10px; flex-shrink: 0; border-radius: 4px; }
+.logo-collapse:hover { color: #fff; background: rgba(255,255,255,0.1); }
 .logo-collapse:hover { color: #fff; }
 .logo-icon { font-size: 26px; margin-right: 10px; }
 .logo-text { color: #fff; }
