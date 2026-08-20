@@ -1,0 +1,9 @@
+frontend/
+data/
+__pycache__/
+*.pyc
+.idea/
+.claude/
+node_modules/
+.git/
+.env.local
