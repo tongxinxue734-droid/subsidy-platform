@@ -48,4 +48,6 @@ body {
   .el-main { padding: 8px !important; }
   .search-box { display: none; }
   .user-dept { display: none; }
+  .el-header { padding: 0 10px !important; }
+  .el-breadcrumb { display: none; }
 }

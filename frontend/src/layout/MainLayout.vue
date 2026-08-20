@@ -2,11 +2,15 @@
   <el-container class="layout">
     <el-aside :width="isCollapse ? '64px' : '220px'" class="aside">
       <div class="logo">
-        <div class="logo-icon">🏛️</div>
+        <div class="logo-icon" v-show="!isCollapse">🏛️</div>
         <div class="logo-text" v-show="!isCollapse">
           <div class="logo-title">西安市高龄补贴</div>
           <div class="logo-sub">监管平台</div>
         </div>
+        <el-icon class="logo-collapse" :size="18" @click="toggleCollapse">
+          <Fold v-if="!isCollapse" />
+          <Expand v-else />
+        </el-icon>
       </div>
       <el-menu
         :default-active="activeMenu"
@@ -40,10 +44,6 @@
     <el-container>
       <el-header class="header">
         <div class="header-left">
-          <el-icon class="collapse-btn" :size="20" @click="toggleCollapse">
-            <Fold v-if="!isCollapse" />
-            <Expand v-else />
-          </el-icon>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item>西安市高龄补贴监管平台</el-breadcrumb-item>
             <el-breadcrumb-item>{{ currentTitle }}</el-breadcrumb-item>
@@ -194,7 +194,9 @@ function logout() {
 <style scoped>
 .layout { height: 100vh; }
 .aside { background: #001529; overflow: hidden; display: flex; flex-direction: column; }
-.logo { height: 60px; display: flex; align-items: center; justify-content: center; padding: 0 16px; background: #002140; flex-shrink: 0; }
+.logo { height: 60px; display: flex; align-items: center; padding: 0 16px; background: #002140; flex-shrink: 0; }
+.logo-collapse { cursor: pointer; color: rgba(255,255,255,0.75); margin-left: auto; padding: 6px; flex-shrink: 0; }
+.logo-collapse:hover { color: #fff; }
 .logo-icon { font-size: 26px; margin-right: 10px; }
 .logo-text { color: #fff; }
 .logo-title { font-size: 14px; font-weight: 600; }
@@ -204,7 +206,8 @@ function logout() {
   background: #fff; display: flex; align-items: center; justify-content: space-between;
   box-shadow: 0 1px 4px rgba(0,21,41,0.08); padding: 0 20px;
 }
-.collapse-btn { cursor: pointer; color: #606266; flex-shrink: 0; }
+.collapse-btn { cursor: pointer; color: #606266; flex-shrink: 0; padding: 10px; border-radius: 4px; line-height: 1; }
+.collapse-btn:active { background: #f0f2f5; }
 .collapse-btn:hover { color: #409eff; }
 .header-left { display: flex; align-items: center; gap: 20px; flex: 1; min-width: 0; }
 .search-box { width: 280px; }
