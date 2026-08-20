@@ -25,4 +25,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE
-        value: https://subsidy-backend.onrender.com/api
+        value: https://subsidy-backend-v3xf.onrender.com/api
