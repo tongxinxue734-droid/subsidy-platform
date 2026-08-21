@@ -41,7 +41,7 @@
             <el-table-column prop="省财政负担" label="省财政" />
             <el-table-column prop="市、区县财政负担" label="市、区县财政" />
           </el-table>
-          <div class="panel-title" style="margin-top:18px">年度资格认证规则</div>
+          <div class="panel-title" style="margin-top:18px">年度复审规则</div>
           <el-descriptions :column="1" border size="small">
             <el-descriptions-item label="认证周期">{{ certifyRules.周期 }}</el-descriptions-item>
             <el-descriptions-item label="认证方式">{{ (certifyRules.方式 || []).join('、') }}</el-descriptions-item>

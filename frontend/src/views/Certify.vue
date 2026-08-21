@@ -15,7 +15,7 @@
         <div class="panel" style="display:flex; flex-direction:column; align-items:center">
           <div class="panel-title" style="align-self:flex-start">年度认证进度</div>
           <el-progress type="dashboard" :percentage="certRate" :color="certRate >= 90 ? '#67c23a' : certRate >= 80 ? '#e6a23c' : '#f56c6c'" />
-          <div style="color:#909399; font-size:13px; margin-top:6px">已完成年度资格认证 · 每年一次</div>
+          <div style="color:#909399; font-size:13px; margin-top:6px">已完成年度复审 · 每年一次</div>
         </div>
       </el-col>
       <el-col :xs="24" :md="16">
@@ -36,7 +36,7 @@
     <el-row :gutter="16" style="margin-top:16px">
       <el-col :xs="24" :md="14">
         <div class="panel">
-          <div class="panel-title">各区县复审率</div>
+          <div class="panel-title">各区县认证率</div>
           <div ref="distRef" class="chart" style="height:320px"></div>
         </div>
       </el-col>
@@ -120,7 +120,7 @@ async function load() {
   if (dist) {
     dist.setOption({
       grid: { left: 90, right: 30, top: 10, bottom: 30 },
-      tooltip: { trigger: 'axis', formatter: p => `${p[0].name}<br/>复审率 ${p[0].value}%` },
+      tooltip: { trigger: 'axis', formatter: p => `${p[0].name}<br/>认证率 ${p[0].value}%` },
       xAxis: { type: 'value', max: 100, axisLabel: { formatter: '{value}%' } },
       yAxis: { type: 'category', data: data.districts.map(d => d.district).reverse() },
       series: [{ type: 'bar', data: data.districts.map(d => d.rate).reverse(), itemStyle: { color: CHART.primary, borderRadius: [0, 4, 4, 0] }, label: { show: true, position: 'right', formatter: '{c}%' } }]

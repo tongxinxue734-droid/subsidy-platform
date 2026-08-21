@@ -63,7 +63,7 @@
         <el-table-column prop="certify_status" label="认证状态" width="100" />
         <el-table-column label="处理建议" min-width="150">
           <template #default="{ row }">
-            <span style="color:#e6a23c">{{ row.certify_status === '认证过期' ? '完成复审后自动补发' : '完成认证后恢复发放' }}</span>
+            <span style="color:#e6a23c">{{ row.certify_status === '认证过期' ? '完成复审后自动补发' : '完成复审后恢复发放' }}</span>
           </template>
         </el-table-column>
       </el-table>
