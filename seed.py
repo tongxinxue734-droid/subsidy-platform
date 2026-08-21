@@ -88,17 +88,19 @@ def _seed_certify_records(session: Session):
                 .order_by(Elder.id).offset(offset).limit(10000).all()
             rows = []
             for eid, certify, last in elders:
-                rows.append({"elder_id": eid, "certify_date": "2024-06",
-                             "method": _r.choice(methods), "result": "通过"})
-                rows.append({"elder_id": eid, "certify_date": "2025-06",
-                             "method": _r.choice(methods), "result": "通过"})
+                m1 = _r.choice(methods)
+                m2 = _r.choice(methods)
                 if certify == "已认证":
-                    rows.append({"elder_id": eid, "certify_date": last or "2026-06",
-                                 "method": _r.choice(methods), "result": "通过"})
+                    rows.append({"elder_id": eid, "certify_date": "2024-06", "method": m1, "result": "通过"})
+                    rows.append({"elder_id": eid, "certify_date": "2025-06", "method": m2, "result": "通过"})
+                    rows.append({"elder_id": eid, "certify_date": last or "2026-06", "method": _r.choice(methods), "result": "通过"})
                 elif certify == "认证过期":
-                    rows.append({"elder_id": eid, "certify_date": last or "2025-01",
-                                 "method": _r.choice(methods), "result": "未通过"})
-                # 待认证：本年度暂无认证记录
+                    rows.append({"elder_id": eid, "certify_date": "2024-06", "method": m1, "result": "通过"})
+                    rows.append({"elder_id": eid, "certify_date": last or "2025-01", "method": m2, "result": "未通过"})
+                else:
+                    # 待认证：去年通过，今年尚未认证（无本年度记录）
+                    rows.append({"elder_id": eid, "certify_date": "2024-06", "method": m1, "result": "通过"})
+                    rows.append({"elder_id": eid, "certify_date": "2025-06", "method": m2, "result": "通过"})
             _bulk_insert(session, CertifyRecord, rows)
 
 
