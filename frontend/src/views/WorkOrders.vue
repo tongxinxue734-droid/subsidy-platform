@@ -78,7 +78,7 @@
             <div class="panel-title" style="margin:0">跨部门数据比对任务</div>
             <el-button type="primary" @click="runCompare">发起一次比对</el-button>
           </div>
-          <el-table :data="tasks" border stripe>
+          <el-table :data="tasks" border stripe empty-text="暂无比对任务，请先发起比对">
             <el-table-column prop="task_no" label="任务编号" width="160" />
             <el-table-column prop="source" label="比对数据源" width="130">
               <template #default="{ row }">

@@ -21,7 +21,7 @@
       <el-col :xs="24" :md="16">
         <div class="panel">
           <div class="panel-title">最近认证记录</div>
-          <el-table :data="recentRecords" border stripe size="small" max-height="220">
+          <el-table :data="recentRecords" border stripe size="small" max-height="220" empty-text="暂无认证记录">
             <el-table-column prop="name" label="姓名(脱敏)" width="110" />
             <el-table-column prop="date" label="认证日期" width="130" />
             <el-table-column prop="method" label="认证方式" />
@@ -50,7 +50,7 @@
 
     <div class="panel">
       <div class="panel-title">待复审清单（认证过期 / 待认证）</div>
-      <el-table :data="todoList" border stripe max-height="460">
+      <el-table :data="todoList" border stripe max-height="460" empty-text="暂无待复审人员">
         <el-table-column prop="archive_no" label="档案号" width="150" />
         <el-table-column prop="name" label="姓名(脱敏)" width="110" />
         <el-table-column prop="district" label="区县" width="100" />

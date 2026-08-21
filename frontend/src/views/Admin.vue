@@ -8,7 +8,7 @@
             <div class="panel-title" style="margin:0">监管账号</div>
             <el-button type="primary" @click="openAdd">新增账号</el-button>
           </div>
-          <el-table :data="users" border stripe>
+          <el-table :data="users" border stripe empty-text="暂无账号">
             <el-table-column prop="username" label="账号" width="140" />
             <el-table-column prop="name" label="姓名" width="110" />
             <el-table-column label="角色" width="90">
@@ -36,7 +36,7 @@
       <!-- 审计日志 -->
       <el-tab-pane label="审计日志" name="logs">
         <div class="panel">
-          <el-table :data="logs" border stripe max-height="560">
+          <el-table :data="logs" border stripe max-height="560" empty-text="暂无审计日志">
             <el-table-column prop="created_at" label="时间" width="170" />
             <el-table-column prop="user_name" label="操作人" width="110" />
             <el-table-column prop="role" label="角色" width="80" />
@@ -49,7 +49,7 @@
       <!-- 消息中心 -->
       <el-tab-pane label="消息中心" name="messages">
         <div class="panel">
-          <el-table :data="messages" border stripe max-height="560">
+          <el-table :data="messages" border stripe max-height="560" empty-text="暂无消息">
             <el-table-column prop="category" label="类型" width="90">
               <template #default="{ row }">
                 <el-tag :type="{ 预警: 'danger', 待办: 'warning', 通知: 'info', 政策: 'primary' }[row.category]" size="small">{{ row.category }}</el-tag>

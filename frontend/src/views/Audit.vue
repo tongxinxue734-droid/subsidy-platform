@@ -49,7 +49,7 @@
             <div class="panel-title" style="margin:0">疑点人员清单（待稽核）</div>
             <el-button type="primary" @click="generateWorkOrders">一键生成稽核工单</el-button>
           </div>
-          <el-table :data="suspects" border stripe max-height="520">
+          <el-table :data="suspects" border stripe max-height="520" empty-text="暂无疑点人员">
             <el-table-column type="index" label="#" width="55" />
             <el-table-column prop="district" label="区县" width="110" />
             <el-table-column prop="name" label="姓名(脱敏)" width="110" />
@@ -116,7 +116,7 @@
 
         <div class="panel">
           <div class="panel-title">高风险人群清单</div>
-          <el-table :data="highList" border stripe max-height="460">
+          <el-table :data="highList" border stripe max-height="460" empty-text="暂无高风险人员">
             <el-table-column prop="archive_no" label="档案号" width="155" />
             <el-table-column prop="name" label="姓名(脱敏)" width="105" />
             <el-table-column prop="district" label="区县" width="95" />

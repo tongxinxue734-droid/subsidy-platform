@@ -39,7 +39,7 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <el-table :data="items" border stripe v-loading="loading">
+      <el-table :data="items" border stripe v-loading="loading" empty-text="暂无发放记录">
         <el-table-column prop="district" label="区县" />
         <el-table-column prop="month" label="发放月份" />
         <el-table-column prop="amount" label="发放金额(万元)" />
@@ -49,7 +49,7 @@
 
     <div class="panel">
       <div class="panel-title">发放异常人员（停发 / 待认证，需复核补发）</div>
-      <el-table :data="abnormal" border stripe max-height="400">
+      <el-table :data="abnormal" border stripe max-height="400" empty-text="暂无发放异常">
         <el-table-column prop="archive_no" label="档案号" width="160" />
         <el-table-column prop="name" label="姓名(脱敏)" width="110" />
         <el-table-column prop="district" label="区县" width="100" />

@@ -36,7 +36,7 @@
         <div class="panel-title" style="margin:0">各区县发放公示</div>
         <el-button size="small" plain @click="exportPublicity">导出公示</el-button>
       </div>
-      <el-table :data="data.items" border stripe max-height="520">
+      <el-table :data="data.items" border stripe max-height="520" empty-text="暂无公示数据">
         <el-table-column type="index" label="#" width="55" />
         <el-table-column prop="district" label="区县" width="140" />
         <el-table-column prop="count" label="受益人数" width="140">

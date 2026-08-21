@@ -40,7 +40,7 @@
         <el-button size="small" plain @click="exportPage">导出当前页</el-button>
         <span v-if="selectedIds.length" style="color:#909399; font-size:12px">已选 {{ selectedIds.length }} 人</span>
       </div>
-      <el-table :data="items" border stripe v-loading="loading" @selection-change="onSelectionChange">
+      <el-table :data="items" border stripe v-loading="loading" @selection-change="onSelectionChange" empty-text="暂无匹配档案">
         <el-table-column type="selection" width="45" />
         <el-table-column prop="archive_no" label="档案号" width="150" />
         <el-table-column prop="district" label="区县" width="100" />
