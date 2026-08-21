@@ -291,7 +291,7 @@ def _seed_audit_logs(session: Session):
             ("王*国", "市级", "登录系统", "监管驾驶舱"),
             ("李*敏", "区县", "审核申领工单", "申领审核"),
             ("王*国", "市级", "生成稽核工单", "智能稽核"),
-            ("张*东", "区县", "待遇变更", "受益对象管理"),
+            ("张*东", "区县", "待遇变更", "老人档案"),
         ]
         rows = [{"user_name": n, "role": r, "action": a, "target": t,
                  "created_at": now - timedelta(hours=i * 3)} for i, (n, r, a, t) in enumerate(logs)]

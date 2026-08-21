@@ -107,7 +107,7 @@ const menuGroups = [
   {
     title: '业务经办', icon: 'FolderOpened', roles: [1, 2, 3], children: [
       { path: '/applications', title: '申领审核', icon: 'EditPen' },
-      { path: '/elders', title: '受益对象管理', icon: 'User' },
+      { path: '/elders', title: '老人档案', icon: 'User' },
       { path: '/certify', title: '年度复审', icon: 'Calendar' },
       { path: '/payments', title: '发放管理', icon: 'Money' }
     ]
