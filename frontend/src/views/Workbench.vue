@@ -1,90 +1,58 @@
 <template>
   <div class="page-container">
+    <!-- 顶部：问候 + 今日待办总览 -->
     <div class="welcome">
       <div>
         <div class="welcome-title">{{ greeting }}，{{ user.name }}</div>
         <div class="welcome-sub">{{ user.dept_name }} · {{ roleName }}账号</div>
       </div>
-      <div class="quick-actions">
-        <el-button type="primary" @click="router.push('/applications')">+ 新增申领</el-button>
-        <el-button @click="router.push('/spotcheck')">发起抽查</el-button>
-        <el-button @click="router.push('/workorders')">工单督办</el-button>
+      <div class="todo-total">
+        <div class="todo-num">{{ totalTodo.toLocaleString() }}</div>
+        <div class="todo-label">今日待办</div>
+      </div>
+      <div class="todo-break">
+        <span class="break-item" @click="router.push('/applications')">待审申领 <b>{{ kpi.pending_apps }}</b></span>
+        <span class="break-item" @click="router.push('/certify')">待复审 <b>{{ kpi.pending_cert }}</b></span>
+        <span class="break-item" @click="router.push('/workorders')">待处理工单 <b>{{ kpi.pending_wo }}</b></span>
+        <span class="break-item" @click="router.push('/admin')">未读消息 <b>{{ kpi.unread }}</b></span>
       </div>
     </div>
 
-    <el-row :gutter="16">
-      <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
-        <div class="stat-card clickable" @click="k.link && router.push(k.link)">
-          <div class="stat-label">{{ k.label }}</div>
-          <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
-          <div class="stat-sub">{{ k.sub }}</div>
-        </div>
-      </el-col>
-    </el-row>
+    <!-- 快捷操作 -->
+    <div class="quick-actions">
+      <el-button type="primary" @click="router.push('/applications')">+ 新增申领</el-button>
+      <el-button @click="router.push('/spotcheck')">发起抽查</el-button>
+      <el-button @click="router.push('/workorders')">工单督办</el-button>
+      <el-button @click="router.push('/elders')">查老人档案</el-button>
+    </div>
 
-    <el-row :gutter="16" style="margin-top:16px">
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">
-            待审申领
-            <el-button link type="primary" style="margin-left:auto" @click="router.push('/applications')">去处理 →</el-button>
-          </div>
-          <el-table :data="recentApps" size="small" border>
-            <el-table-column prop="apply_no" label="申领编号" width="160" />
-            <el-table-column prop="name" label="姓名(脱敏)" width="100" />
-            <el-table-column prop="district" label="区县" width="95" />
-            <el-table-column prop="status" label="状态" />
-          </el-table>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">
-            待复审老人
-            <el-button link type="primary" style="margin-left:auto" @click="router.push('/certify')">去处理 →</el-button>
-          </div>
-          <el-table :data="recentCert" size="small" border>
-            <el-table-column prop="archive_no" label="档案号" width="150" />
-            <el-table-column prop="name" label="姓名(脱敏)" width="100" />
-            <el-table-column prop="district" label="区县" width="95" />
-            <el-table-column prop="certify_status" label="状态" />
-          </el-table>
-        </div>
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="16" style="margin-top:16px">
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">
-            待处理工单
-            <el-button link type="primary" style="margin-left:auto" @click="router.push('/workorders')">去处理 →</el-button>
-          </div>
-          <el-table :data="recentWo" size="small" border>
-            <el-table-column prop="work_no" label="工单号" width="170" />
-            <el-table-column prop="category" label="类别" width="90" />
-            <el-table-column prop="title" label="事项" min-width="160" show-overflow-tooltip />
-            <el-table-column prop="status" label="状态" width="90" />
-          </el-table>
-        </div>
-      </el-col>
-      <el-col :xs="24" :md="12">
-        <div class="panel">
-          <div class="panel-title">
-            未读消息
-            <el-button link type="primary" style="margin-left:auto" @click="router.push('/admin')">去查看 →</el-button>
-          </div>
-          <el-table :data="recentMsg" size="small" border>
-            <el-table-column prop="category" label="类型" width="90">
-              <template #default="{ row }">
-                <el-tag :type="{ 预警: 'danger', 待办: 'warning', 通知: 'info', 政策: 'primary' }[row.category]" size="small">{{ row.category }}</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column prop="title" label="标题" />
-          </el-table>
-        </div>
-      </el-col>
-    </el-row>
+    <!-- 待办中心 -->
+    <div class="panel">
+      <div class="panel-title">待办中心（按紧急度排序）</div>
+      <el-table :data="todoList" border stripe max-height="520" empty-text="暂无待办">
+        <el-table-column label="类型" width="90">
+          <template #default="{ row }">
+            <el-tag :type="typeTag(row.type)" size="small" effect="dark">{{ row.type }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="事项" min-width="240" show-overflow-tooltip>
+          <template #default="{ row }">
+            <span style="font-weight:500">{{ row.title }}</span>
+            <span style="color:#909399; font-size:12px; margin-left:8px">{{ row.sub }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" width="110">
+          <template #default="{ row }">
+            <el-tag :type="statusTag(row.status)" size="small">{{ row.status }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="100" fixed="right">
+          <template #default="{ row }">
+            <el-button link type="primary" @click="router.push(row.link)">去处理 →</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -101,35 +69,56 @@ const greeting = computed(() => {
   return h < 12 ? '早上好' : h < 18 ? '下午好' : '晚上好'
 })
 
-const kpis = ref([])
-const recentApps = ref([])
-const recentCert = ref([])
-const recentWo = ref([])
-const recentMsg = ref([])
+const kpi = ref({ pending_apps: 0, pending_cert: 0, pending_wo: 0, unread: 0 })
+const data = ref(null)
+
+const totalTodo = computed(() => data.value
+  ? data.value.kpi.pending_apps + data.value.kpi.pending_cert + data.value.kpi.pending_wo
+  : 0)
+
+const order = { '待处理': 0, '认证过期': 1, '待复核': 2, '待认证': 3, '待街道审核': 4, '待区县审批': 5, '整改中': 6 }
+
+const todoList = computed(() => {
+  if (!data.value) return []
+  const items = []
+  data.value.recent_wo.forEach(w => items.push({ type: '工单', title: w.title, sub: w.work_no, status: w.status, link: '/workorders' }))
+  data.value.recent_cert.forEach(e => items.push({ type: '复审', title: `${e.name}（${e.certify_status}）`, sub: e.archive_no, status: e.certify_status, link: '/certify' }))
+  data.value.recent_apps.forEach(a => items.push({ type: '申领', title: `${a.name} 申领`, sub: a.apply_no, status: a.status, link: '/applications' }))
+  items.sort((a, b) => (order[a.status] ?? 99) - (order[b.status] ?? 99))
+  return items.slice(0, 12)
+})
+
+function typeTag(t) { return { 工单: 'danger', 复审: 'warning', 申领: 'primary' }[t] || 'info' }
+function statusTag(s) {
+  return { 待处理: 'danger', 认证过期: 'danger', 待复核: 'warning', 待认证: 'warning', 待街道审核: 'primary', 待区县审批: 'primary', 整改中: 'info' }[s] || 'info'
+}
 
 onMounted(async () => {
   const d = await request.get('/workbench')
-  kpis.value = [
-    { label: '待审申领', value: d.kpi.pending_apps, sub: '去申领审核处理', color: '#409eff', link: '/applications' },
-    { label: '待复审', value: d.kpi.pending_cert, sub: '认证待处理', color: '#e6a23c', link: '/certify' },
-    { label: '待处理工单', value: d.kpi.pending_wo, sub: '监管闭环', color: '#f56c6c', link: '/workorders' },
-    { label: '未读消息', value: d.kpi.unread, sub: '消息中心', color: '#909399', link: '/admin' }
-  ]
-  recentApps.value = d.recent_apps
-  recentCert.value = d.recent_cert
-  recentWo.value = d.recent_wo
-  recentMsg.value = d.recent_msg
+  data.value = d
+  kpi.value = d.kpi
 })
 </script>
 
 <style scoped>
 .welcome {
-  display: flex; align-items: center; justify-content: space-between; padding: 18px 22px;
-  background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,21,41,0.06); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 40px; padding: 22px 24px;
+  background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,21,41,0.05);
+  border: 1px solid #eef0f4; margin-bottom: 16px; flex-wrap: wrap;
 }
 .welcome-title { font-size: 20px; font-weight: 700; color: #303133; }
 .welcome-sub { font-size: 13px; color: #909399; margin-top: 4px; }
+
+.todo-total { text-align: center; min-width: 120px; }
+.todo-num { font-size: 34px; font-weight: 800; color: #409eff; line-height: 1; }
+.todo-label { font-size: 12px; color: #909399; margin-top: 4px; }
+
+.todo-break { display: flex; gap: 20px; flex-wrap: wrap; }
+.break-item { font-size: 13px; color: #606266; cursor: pointer; }
+.break-item b { font-size: 18px; color: #303133; margin-left: 4px; }
+.break-item:hover { color: #409eff; }
+
+.quick-actions { display: flex; gap: 12px; margin-bottom: 16px; }
+
 .panel-title { display: flex; align-items: center; }
-.clickable { cursor: pointer; transition: box-shadow .2s; }
-.clickable:hover { box-shadow: 0 4px 14px rgba(64,158,255,0.22); }
 </style>
