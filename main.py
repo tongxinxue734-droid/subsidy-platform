@@ -10,7 +10,7 @@ from fastapi import FastAPI, Depends, HTTPException, Header, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-from sqlalchemy import func, or_
+from sqlalchemy import func, or_, text
 from sqlalchemy.orm import Session
 
 import db
@@ -1066,6 +1066,83 @@ async def ai_stream(req: ChatRequest, user: User = Depends(get_current_user), s:
             yield f"data: {json.dumps({'error': str(e)}, ensure_ascii=False)}\n\n"
 
     return StreamingResponse(gen(), media_type="text/event-stream")
+
+
+# ---------------- NL2SQL 自然语言数据查询 ----------------
+@app.post("/api/ai/nl2sql")
+async def ai_nl2sql(req: ChatRequest, user: User = Depends(get_current_user), s: Session = Depends(get_db)):
+    import httpx
+    import re
+    question = req.messages[-1].get("content", "") if req.messages else ""
+    if not question:
+        raise HTTPException(400, "问题不能为空")
+    if not config.DEEPSEEK_API_KEY:
+        raise HTTPException(500, "未配置 DeepSeek API Key")
+
+    schema = (
+        "SQLite 表结构（字段含义）：\n"
+        "elders(id, district 区县, street 街道, name, gender 性别, age_band 年龄段, standard 补贴标准, "
+        "certify_status 认证状态[已认证/待认证/认证过期], status 发放状态[在发/停发/待认证], "
+        "suspect_type 疑点类型, apply_channel 申领渠道, register_date 建档日期)\n"
+        "payment_records(district 区县, pay_month 发放月份, amount 发放金额万元, count 受益人数)\n"
+        "work_orders(category 类别, district 区县, level 级别, status 状态[待处理/整改中/待复核/已销号])\n"
+        "applications(district 区县, status 状态, age_band 年龄段)\n"
+    )
+    async with httpx.AsyncClient(timeout=60) as client:
+        r = await client.post(
+            config.DEEPSEEK_API_URL,
+            headers={"Authorization": f"Bearer {config.DEEPSEEK_API_KEY}"},
+            json={"model": config.DEEPSEEK_MODEL,
+                  "messages": [{"role": "user",
+                                "content": f"{schema}\n为下面的问题生成一条 SQLite 只读 SELECT 查询，只输出 SQL 本身，不要解释、不要 markdown 代码块：\n{question}"}],
+                  "temperature": 0, "max_tokens": 500})
+        r.raise_for_status()
+        sql = r.json()["choices"][0]["message"]["content"].strip()
+
+    sql = re.sub(r"```(?:sql)?", "", sql).strip().rstrip(";")
+    upper = sql.upper()
+    if not upper.startswith("SELECT"):
+        return {"sql": sql, "error": "仅支持只读查询"}
+    for bad in ("INSERT", "UPDATE", "DELETE", "DROP", "ALTER", "CREATE", "PRAGMA", "ATTACH"):
+        if bad in upper:
+            return {"sql": sql, "error": "检测到非法操作"}
+    try:
+        result = s.execute(text(sql + " LIMIT 20")).fetchall()
+        cols = list(result[0].keys()) if result else []
+        rows = [[str(x) for x in row] for row in result]
+        return {"sql": sql, "columns": cols, "rows": rows, "count": len(rows)}
+    except Exception as e:
+        return {"sql": sql, "error": f"查询失败：{e}"}
+
+
+# ---------------- 统计异常检测（z-score 离群） ----------------
+@app.get("/api/anomaly")
+def anomaly(user: User = Depends(get_current_user), s: Session = Depends(get_db)):
+    import statistics
+    eq = elder_scope(s, user)
+    elders = eq.filter(Elder.certify_status.in_(["已认证", "认证过期"])) \
+        .with_entities(Elder.id, Elder.district, Elder.name, Elder.certify_status,
+                       Elder.last_certify).all()
+    intervals = []
+    for eid, district, name, status, last in elders:
+        if not last:
+            continue
+        y, m = int(last[:4]), int(last[5:7])
+        months = (2026 - y) * 12 + (8 - m)
+        intervals.append({"id": eid, "district": district, "name": name, "status": status,
+                          "last_certify": last, "months": months})
+    vals = [x["months"] for x in intervals]
+    mean = statistics.mean(vals) if vals else 0
+    stdev = statistics.stdev(vals) if len(vals) > 1 else 0
+    outliers = []
+    for x in intervals:
+        z = (x["months"] - mean) / stdev if stdev else 0
+        if z >= 1.5:
+            x["z_score"] = round(z, 2)
+            outliers.append(x)
+    outliers.sort(key=lambda x: -x["months"])
+    return {"mean": round(mean, 1), "stdev": round(stdev, 1),
+            "outliers": outliers[:20], "total": len(intervals)}
 
 
 # ---------------- 风险画像 ----------------

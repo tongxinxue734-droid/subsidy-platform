@@ -98,6 +98,23 @@
         </el-row>
 
         <div class="panel">
+          <div class="panel-title">统计异常检测（z-score 离群）</div>
+          <el-alert :title="`认证间隔均值 ${anomalyData.mean} 月，标准差 ${anomalyData.stdev}；自动发现 ${anomalyData.outliers.length} 个认证间隔异常对象`" type="warning" :closable="false" show-icon style="margin-bottom:12px" />
+          <el-table :data="anomalyData.outliers" border stripe size="small" max-height="260" empty-text="当前无可检测异常（数据需含认证过期样本）">
+            <el-table-column prop="district" label="区县" width="100" />
+            <el-table-column prop="name" label="姓名(脱敏)" width="110" />
+            <el-table-column prop="last_certify" label="上次认证" width="110" />
+            <el-table-column prop="months" label="间隔(月)" width="90" />
+            <el-table-column prop="z_score" label="z 分数" width="90">
+              <template #default="{ row }">
+                <el-tag type="danger" size="small">{{ row.z_score }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column prop="status" label="认证状态" />
+          </el-table>
+        </div>
+
+        <div class="panel">
           <div class="panel-title">高风险人群清单</div>
           <el-table :data="highList" border stripe max-height="460">
             <el-table-column prop="archive_no" label="档案号" width="155" />
@@ -143,6 +160,7 @@ const rectifications = ref([])
 const suspects = ref([])
 const riskKpis = ref([])
 const highList = ref([])
+const anomalyData = ref({ mean: 0, stdev: 0, outliers: [], total: 0 })
 const typeRef = ref()
 const scoreRef = ref()
 const detailVisible = ref(false)
@@ -207,6 +225,7 @@ onMounted(async () => {
   highList.value = r.high_list
   typeDist = r.type_dist
   scoreDist = r.score_dist
+  anomalyData.value = await request.get('/anomaly')
 })
 
 onBeforeUnmount(() => {
