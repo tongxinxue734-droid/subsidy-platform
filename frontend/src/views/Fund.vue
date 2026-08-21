@@ -5,17 +5,23 @@
       <el-tab-pane label="资金监管" name="fund">
         <el-row :gutter="16">
           <el-col :xs="24" :md="12">
-            <div class="stat-card">
-              <div class="stat-label">累计发放金额</div>
-              <div class="stat-value" style="color:#409eff">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
-              <div class="stat-sub">财政分级负担</div>
+            <div class="kpi-card" style="--c:#409eff">
+              <div class="kpi-icon">💰</div>
+              <div class="kpi-body">
+                <div class="kpi-label">累计发放金额</div>
+                <div class="kpi-value">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
+                <div class="kpi-sub">财政分级负担</div>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :md="12">
-            <div class="stat-card">
-              <div class="stat-label">覆盖区县</div>
-              <div class="stat-value" style="color:#67c23a">{{ districtFund.length }}</div>
-              <div class="stat-sub">行政区划</div>
+            <div class="kpi-card" style="--c:#67c23a">
+              <div class="kpi-icon">🗺️</div>
+              <div class="kpi-body">
+                <div class="kpi-label">覆盖区县</div>
+                <div class="kpi-value">{{ districtFund.length }}</div>
+                <div class="kpi-sub">行政区划</div>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -52,31 +58,43 @@
         <el-alert title="预算执行率按 2026 年累计发放 / 年度预算动态计算；及时到账率按区县整改情况动态计算" type="info" show-icon :closable="false" style="margin-bottom:16px" />
         <el-row :gutter="16">
           <el-col :xs="24" :sm="12" :md="6">
-            <div class="stat-card">
-              <div class="stat-label">累计发放金额</div>
-              <div class="stat-value" style="color:#409eff">{{ (perf.total_amount / 10000).toFixed(2) }} 亿元</div>
-              <div class="stat-sub">近 {{ perf.months }} 个月</div>
+            <div class="kpi-card" style="--c:#409eff">
+              <div class="kpi-icon">💰</div>
+              <div class="kpi-body">
+                <div class="kpi-label">累计发放金额</div>
+                <div class="kpi-value">{{ (perf.total_amount / 10000).toFixed(2) }} 亿元</div>
+                <div class="kpi-sub">近 {{ perf.months }} 个月</div>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="6">
-            <div class="stat-card">
-              <div class="stat-label">月均发放</div>
-              <div class="stat-value" style="color:#e6a23c">{{ perf.avg_month }} 万元</div>
-              <div class="stat-sub">全市月均</div>
+            <div class="kpi-card" style="--c:#e6a23c">
+              <div class="kpi-icon">📅</div>
+              <div class="kpi-body">
+                <div class="kpi-label">月均发放</div>
+                <div class="kpi-value">{{ perf.avg_month }} 万元</div>
+                <div class="kpi-sub">全市月均</div>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="6">
-            <div class="stat-card">
-              <div class="stat-label">预算执行率</div>
-              <div class="stat-value" style="color:#67c23a">{{ perf.exec_rate }}%</div>
-              <div class="stat-sub">执行进度</div>
+            <div class="kpi-card" style="--c:#67c23a">
+              <div class="kpi-icon">📈</div>
+              <div class="kpi-body">
+                <div class="kpi-label">预算执行率</div>
+                <div class="kpi-value">{{ perf.exec_rate }}%</div>
+                <div class="kpi-sub">执行进度</div>
+              </div>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="6">
-            <div class="stat-card">
-              <div class="stat-label">及时到账率</div>
-              <div class="stat-value" style="color:#f56c6c">{{ perf.on_time_rate }}%</div>
-              <div class="stat-sub">按时足额发放</div>
+            <div class="kpi-card" style="--c:#f56c6c">
+              <div class="kpi-icon">⏱️</div>
+              <div class="kpi-body">
+                <div class="kpi-label">及时到账率</div>
+                <div class="kpi-value">{{ perf.on_time_rate }}%</div>
+                <div class="kpi-sub">按时足额发放</div>
+              </div>
             </div>
           </el-col>
         </el-row>

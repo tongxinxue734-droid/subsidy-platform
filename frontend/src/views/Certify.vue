@@ -2,10 +2,13 @@
   <div class="page-container">
     <el-row :gutter="16">
       <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
-        <div class="stat-card">
-          <div class="stat-label">{{ k.label }}</div>
-          <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
-          <div class="stat-sub">{{ k.sub }}</div>
+        <div class="kpi-card" :style="{ '--c': k.color }">
+          <div class="kpi-icon">{{ k.icon }}</div>
+          <div class="kpi-body">
+            <div class="kpi-label">{{ k.label }}</div>
+            <div class="kpi-value">{{ k.value }}</div>
+            <div class="kpi-sub">{{ k.sub }}</div>
+          </div>
         </div>
       </el-col>
     </el-row>
@@ -107,10 +110,10 @@ function certifyOne(row) {
 async function load() {
   const data = await request.get('/certify/overview')
   kpis.value = [
-    { label: '受益老人', value: data.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff' },
-    { label: '已认证', value: data.kpi.certified.toLocaleString(), sub: '认证通过', color: '#67c23a' },
-    { label: '待认证', value: data.kpi.pending.toLocaleString(), sub: '需完成复审', color: '#e6a23c' },
-    { label: '认证过期', value: data.kpi.expired.toLocaleString(), sub: '已暂停发放', color: '#f56c6c' }
+    { label: '受益老人', value: data.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff', icon: '👴' },
+    { label: '已认证', value: data.kpi.certified.toLocaleString(), sub: '认证通过', color: '#67c23a', icon: '✅' },
+    { label: '待认证', value: data.kpi.pending.toLocaleString(), sub: '需完成复审', color: '#e6a23c', icon: '⏳' },
+    { label: '认证过期', value: data.kpi.expired.toLocaleString(), sub: '已暂停发放', color: '#f56c6c', icon: '⚠️' }
   ]
   todoList.value = [...data.expired_list, ...data.pending_list]
   recentRecords.value = data.recent_records

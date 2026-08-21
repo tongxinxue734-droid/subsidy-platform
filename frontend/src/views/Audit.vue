@@ -5,10 +5,13 @@
       <el-tab-pane label="疑点稽核" name="audit">
         <el-row :gutter="16">
           <el-col :span="6" v-for="a in alertCards" :key="a.label">
-            <div class="stat-card">
-              <div class="stat-label">{{ a.label }}</div>
-              <div class="stat-value" :style="{ color: a.color }">{{ a.value }}</div>
-              <div class="stat-sub">{{ a.sub }}</div>
+            <div class="kpi-card" :style="{ '--c': a.color }">
+              <div class="kpi-icon">{{ a.icon }}</div>
+              <div class="kpi-body">
+                <div class="kpi-label">{{ a.label }}</div>
+                <div class="kpi-value">{{ a.value }}</div>
+                <div class="kpi-sub">{{ a.sub }}</div>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -74,10 +77,13 @@
       <el-tab-pane label="风险画像" name="risk">
         <el-row :gutter="16">
           <el-col :span="4" v-for="k in riskKpis" :key="k.label">
-            <div class="stat-card">
-              <div class="stat-label">{{ k.label }}</div>
-              <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
-              <div class="stat-sub">{{ k.sub }}</div>
+            <div class="kpi-card" :style="{ '--c': k.color }">
+              <div class="kpi-icon">{{ k.icon }}</div>
+              <div class="kpi-body">
+                <div class="kpi-label">{{ k.label }}</div>
+                <div class="kpi-value">{{ k.value }}</div>
+                <div class="kpi-sub">{{ k.sub }}</div>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -204,10 +210,10 @@ onMounted(async () => {
   const data = await request.get('/audit')
   const a = data.alerts
   alertCards.value = [
-    { label: '红色预警', value: a.red, sub: '疑似冒领/重复领取', color: '#f56c6c' },
-    { label: '橙色预警', value: a.orange, sub: '认证过期', color: '#e6a23c' },
-    { label: '黄色预警', value: a.yellow, sub: '信息异常', color: '#f7ba2a' },
-    { label: '疑点合计', value: a.total, sub: '待稽核', color: '#909399' }
+    { label: '红色预警', value: a.red, sub: '疑似冒领/重复领取', color: '#f56c6c', icon: '🚨' },
+    { label: '橙色预警', value: a.orange, sub: '认证过期', color: '#e6a23c', icon: '🟠' },
+    { label: '黄色预警', value: a.yellow, sub: '信息异常', color: '#f7ba2a', icon: '🟡' },
+    { label: '疑点合计', value: a.total, sub: '待稽核', color: '#909399', icon: '⚠️' }
   ]
   suspectTypes.value = data.suspect_types
   rectifications.value = data.rectifications
@@ -215,12 +221,12 @@ onMounted(async () => {
 
   const r = await request.get('/risk')
   riskKpis.value = [
-    { label: '在册老人', value: r.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff' },
-    { label: '高风险', value: r.kpi.high.toLocaleString(), sub: '需立即处置', color: '#f56c6c' },
-    { label: '中风险', value: r.kpi.mid.toLocaleString(), sub: '需关注', color: '#e6a23c' },
-    { label: '低风险', value: r.kpi.low.toLocaleString(), sub: '正常', color: '#67c23a' },
-    { label: '高风险占比', value: ((r.kpi.high / r.kpi.total) * 100).toFixed(1) + '%', sub: '占在册比例', color: '#f56c6c' },
-    { label: '待处置', value: (r.kpi.high - r.kpi.disposed).toLocaleString(), sub: '未生成工单', color: '#e6a23c' }
+    { label: '在册老人', value: r.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff', icon: '👴' },
+    { label: '高风险', value: r.kpi.high.toLocaleString(), sub: '需立即处置', color: '#f56c6c', icon: '🔴' },
+    { label: '中风险', value: r.kpi.mid.toLocaleString(), sub: '需关注', color: '#e6a23c', icon: '🟠' },
+    { label: '低风险', value: r.kpi.low.toLocaleString(), sub: '正常', color: '#67c23a', icon: '🟢' },
+    { label: '高风险占比', value: ((r.kpi.high / r.kpi.total) * 100).toFixed(1) + '%', sub: '占在册比例', color: '#f56c6c', icon: '📊' },
+    { label: '待处置', value: (r.kpi.high - r.kpi.disposed).toLocaleString(), sub: '未生成工单', color: '#e6a23c', icon: '🎫' }
   ]
   highList.value = r.high_list
   typeDist = r.type_dist

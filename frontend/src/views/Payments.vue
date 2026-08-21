@@ -2,17 +2,23 @@
   <div class="page-container">
     <el-row :gutter="16">
       <el-col :xs="24" :md="12">
-        <div class="stat-card">
-          <div class="stat-label">累计发放金额</div>
-          <div class="stat-value" style="color:#409eff">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
-          <div class="stat-sub">台账范围内</div>
+        <div class="kpi-card" style="--c:#409eff">
+          <div class="kpi-icon">💰</div>
+          <div class="kpi-body">
+            <div class="kpi-label">累计发放金额</div>
+            <div class="kpi-value">{{ (totalAmount / 10000).toFixed(2) }} 亿元</div>
+            <div class="kpi-sub">台账范围内</div>
+          </div>
         </div>
       </el-col>
       <el-col :xs="24" :md="12">
-        <div class="stat-card">
-          <div class="stat-label">累计受益人次</div>
-          <div class="stat-value" style="color:#67c23a">{{ totalCount.toLocaleString() }}</div>
-          <div class="stat-sub">台账范围内</div>
+        <div class="kpi-card" style="--c:#67c23a">
+          <div class="kpi-icon">👴</div>
+          <div class="kpi-body">
+            <div class="kpi-label">累计受益人次</div>
+            <div class="kpi-value">{{ totalCount.toLocaleString() }}</div>
+            <div class="kpi-sub">台账范围内</div>
+          </div>
         </div>
       </el-col>
     </el-row>

@@ -2,31 +2,43 @@
   <div class="page-container">
     <el-row :gutter="16">
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="stat-card">
-          <div class="stat-label">公示月份</div>
-          <div class="stat-value" style="color:#409eff">{{ data.latest_month }}</div>
-          <div class="stat-sub">当月发放</div>
+        <div class="kpi-card" style="--c:#409eff">
+          <div class="kpi-icon">📅</div>
+          <div class="kpi-body">
+            <div class="kpi-label">公示月份</div>
+            <div class="kpi-value">{{ data.latest_month }}</div>
+            <div class="kpi-sub">当月发放</div>
+          </div>
         </div>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="stat-card">
-          <div class="stat-label">当月发放金额</div>
-          <div class="stat-value" style="color:#67c23a">{{ (data.total_amount || 0).toLocaleString() }} 万元</div>
-          <div class="stat-sub">全市合计</div>
+        <div class="kpi-card" style="--c:#67c23a">
+          <div class="kpi-icon">💰</div>
+          <div class="kpi-body">
+            <div class="kpi-label">当月发放金额</div>
+            <div class="kpi-value">{{ (data.total_amount || 0).toLocaleString() }} 万元</div>
+            <div class="kpi-sub">全市合计</div>
+          </div>
         </div>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="stat-card">
-          <div class="stat-label">当月受益人数</div>
-          <div class="stat-value" style="color:#e6a23c">{{ (data.total_count || 0).toLocaleString() }} 人</div>
-          <div class="stat-sub">70 周岁以上</div>
+        <div class="kpi-card" style="--c:#e6a23c">
+          <div class="kpi-icon">👴</div>
+          <div class="kpi-body">
+            <div class="kpi-label">当月受益人数</div>
+            <div class="kpi-value">{{ (data.total_count || 0).toLocaleString() }} 人</div>
+            <div class="kpi-sub">70 周岁以上</div>
+          </div>
         </div>
       </el-col>
       <el-col :xs="24" :sm="12" :md="6">
-        <div class="stat-card">
-          <div class="stat-label">公示区县</div>
-          <div class="stat-value" style="color:#909399">{{ data.items.length }}</div>
-          <div class="stat-sub">应公开尽公开</div>
+        <div class="kpi-card" style="--c:#909399">
+          <div class="kpi-icon">🗺️</div>
+          <div class="kpi-body">
+            <div class="kpi-label">公示区县</div>
+            <div class="kpi-value">{{ data.items.length }}</div>
+            <div class="kpi-sub">应公开尽公开</div>
+          </div>
         </div>
       </el-col>
     </el-row>

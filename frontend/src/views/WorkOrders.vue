@@ -5,10 +5,13 @@
       <el-tab-pane label="工单中心" name="orders">
         <el-row :gutter="16">
           <el-col :xs="24" :sm="12" :md="6" v-for="k in kpis" :key="k.label">
-            <div class="stat-card">
-              <div class="stat-label">{{ k.label }}</div>
-              <div class="stat-value" :style="{ color: k.color }">{{ k.value }}</div>
-              <div class="stat-sub">{{ k.sub }}</div>
+            <div class="kpi-card" :style="{ '--c': k.color }">
+              <div class="kpi-icon">{{ k.icon }}</div>
+              <div class="kpi-body">
+                <div class="kpi-label">{{ k.label }}</div>
+                <div class="kpi-value">{{ k.value }}</div>
+                <div class="kpi-sub">{{ k.sub }}</div>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -131,10 +134,10 @@ const filtered = computed(() => items.value.filter(r =>
 const kpis = computed(() => {
   const cnt = s => items.value.filter(r => r.status === s).length
   return [
-    { label: '待处理', value: cnt('待处理'), sub: '需立即处置', color: '#f56c6c' },
-    { label: '整改中', value: cnt('整改中'), sub: '处理进行中', color: '#e6a23c' },
-    { label: '待复核', value: cnt('待复核'), sub: '等待复核销号', color: '#409eff' },
-    { label: '已销号', value: cnt('已销号'), sub: '已闭环', color: '#67c23a' }
+    { label: '待处理', value: cnt('待处理'), sub: '需立即处置', color: '#f56c6c', icon: '🔴' },
+    { label: '整改中', value: cnt('整改中'), sub: '处理进行中', color: '#e6a23c', icon: '🟠' },
+    { label: '待复核', value: cnt('待复核'), sub: '等待复核销号', color: '#409eff', icon: '🔵' },
+    { label: '已销号', value: cnt('已销号'), sub: '已闭环', color: '#67c23a', icon: '🟢' }
   ]
 })
 
