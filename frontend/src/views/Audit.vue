@@ -99,7 +99,7 @@
 
         <div class="panel">
           <div class="panel-title">统计异常检测（z-score 离群）</div>
-          <el-alert :title="`认证间隔均值 ${anomalyData.mean} 月，标准差 ${anomalyData.stdev}；自动发现 ${anomalyData.outliers.length} 个认证间隔异常对象`" type="warning" :closable="false" show-icon style="margin-bottom:12px" />
+          <el-alert :title="`${anomalyData.method}：认证间隔均值 ${anomalyData.mean} 月（标准差 ${anomalyData.stdev}），自动发现 ${anomalyData.outliers.length} 个异常对象`" :description="anomalyData.policy" type="warning" :closable="false" show-icon style="margin-bottom:12px" />
           <el-table :data="anomalyData.outliers" border stripe size="small" max-height="260" empty-text="当前无可检测异常（数据需含认证过期样本）">
             <el-table-column prop="district" label="区县" width="100" />
             <el-table-column prop="name" label="姓名(脱敏)" width="110" />

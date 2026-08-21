@@ -25,3 +25,7 @@ frontend/dist/
 # 系统
 .DS_Store
 Thumbs.db
+
+# 比赛答辩准备（不推送）
+答辩话术.md
+PPT方案内容.md

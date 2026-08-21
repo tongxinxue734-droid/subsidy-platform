@@ -1141,8 +1141,12 @@ def anomaly(user: User = Depends(get_current_user), s: Session = Depends(get_db)
             x["z_score"] = round(z, 2)
             outliers.append(x)
     outliers.sort(key=lambda x: -x["months"])
-    return {"mean": round(mean, 1), "stdev": round(stdev, 1),
-            "outliers": outliers[:20], "total": len(intervals)}
+    return {
+        "method": "z-score 统计离群检测",
+        "policy": "依据《西安市高龄老人生活保健补贴发放办法》，补贴需每年资格认证、逾期暂停发放；本检测用 z-score 自动发现认证间隔统计异常对象",
+        "mean": round(mean, 1), "stdev": round(stdev, 1),
+        "outliers": outliers[:20], "total": len(intervals),
+    }
 
 
 # ---------------- 风险画像 ----------------
