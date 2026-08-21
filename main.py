@@ -183,6 +183,7 @@ def dashboard(user: User = Depends(get_current_user), s: Session = Depends(get_d
         "kpi": {
             "total_amount": round(total_amount, 0), "latest_amount": round(latest_amount, 0),
             "latest_month": latest_month, "total_elders": total_elders, "cert_rate": cert_rate,
+            "beneficiary_count": config.CITY_BENEFICIARIES,
         },
         "alerts": {"red": red, "orange": orange, "yellow": yellow, "total": red + orange + yellow},
         "trend": [{"month": m, "amount": round(a, 1)} for m, a in trend],

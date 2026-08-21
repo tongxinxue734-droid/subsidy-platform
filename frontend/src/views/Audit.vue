@@ -215,7 +215,7 @@ onMounted(async () => {
 
   const r = await request.get('/risk')
   riskKpis.value = [
-    { label: '在册老人', value: r.kpi.total.toLocaleString(), sub: '风险评分对象', color: '#409eff' },
+    { label: '在册老人', value: r.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff' },
     { label: '高风险', value: r.kpi.high.toLocaleString(), sub: '需立即处置', color: '#f56c6c' },
     { label: '中风险', value: r.kpi.mid.toLocaleString(), sub: '需关注', color: '#e6a23c' },
     { label: '低风险', value: r.kpi.low.toLocaleString(), sub: '正常', color: '#67c23a' },

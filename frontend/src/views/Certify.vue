@@ -107,7 +107,7 @@ function certifyOne(row) {
 async function load() {
   const data = await request.get('/certify/overview')
   kpis.value = [
-    { label: '受益老人', value: data.kpi.total.toLocaleString(), sub: '在册总数', color: '#409eff' },
+    { label: '受益老人', value: data.kpi.total.toLocaleString(), sub: '抽样档案', color: '#409eff' },
     { label: '已认证', value: data.kpi.certified.toLocaleString(), sub: '认证通过', color: '#67c23a' },
     { label: '待认证', value: data.kpi.pending.toLocaleString(), sub: '需完成复审', color: '#e6a23c' },
     { label: '认证过期', value: data.kpi.expired.toLocaleString(), sub: '已暂停发放', color: '#f56c6c' }

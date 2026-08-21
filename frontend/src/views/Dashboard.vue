@@ -126,7 +126,7 @@ onMounted(async () => {
   kpis.value = [
     { label: '累计发放金额', value: `${(data.kpi.total_amount / 10000).toFixed(2)} 亿元`, sub: '2025-01 至今', color: '#409eff', icon: '💰' },
     { label: '本月发放', value: `${data.kpi.latest_amount} 万元`, sub: data.kpi.latest_month, color: '#67c23a', icon: '📅' },
-    { label: '受益老人', value: `${data.kpi.total_elders.toLocaleString()} 人`, sub: '70 周岁以上', color: '#e6a23c', icon: '👴' },
+    { label: '受益老人', value: `${(data.kpi.beneficiary_count / 10000).toFixed(1)} 万人`, sub: '全市实际 · 抽样档案 10 万条', color: '#e6a23c', icon: '👴' },
     { label: '资格认证率', value: `${data.kpi.cert_rate}%`, sub: '已认证占比', color: '#f56c6c', icon: '✅' }
   ]
   alertCards.value = [

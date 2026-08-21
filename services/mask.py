@@ -29,10 +29,15 @@ def mask_name(gender: str = "男") -> str:
     return surname + random.choice(titles)
 
 
+# 西安市身份证前 6 位中的区县代码（61=陕西 01=西安，后两位为区县）
+_XIAN_DISTRICT_CODES = ["02", "03", "04", "11", "12", "13", "14", "15", "16", "17", "18", "22", "24"]
+
+
 def mask_id_card() -> str:
-    """脱敏身份证：610119********1234"""
+    """脱敏身份证：6101XX********XXXX（6101 为西安市，XX 为区县代码）"""
+    code = random.choice(_XIAN_DISTRICT_CODES)
     tail = "".join(str(random.randint(0, 9)) for _ in range(4))
-    return "610119" + "********" + tail
+    return "6101" + code + "********" + tail
 
 
 def mask_phone() -> str:

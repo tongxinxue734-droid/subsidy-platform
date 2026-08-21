@@ -1,6 +1,7 @@
 <template>
   <div class="page-container">
     <div class="panel">
+      <el-alert title="展示 10 万条脱敏抽样档案（全市实际受益老人 104.1 万）" type="info" :closable="false" show-icon style="margin-bottom:14px" />
       <el-form :inline="true">
         <el-form-item label="区县" v-if="isCity">
           <el-select v-model="filter.district" placeholder="全部" clearable style="width:140px" @change="onDistrictChange">
