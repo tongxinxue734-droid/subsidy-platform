@@ -169,7 +169,7 @@ def dashboard(user: User = Depends(get_current_user), s: Session = Depends(get_d
         func.sum(PaymentRecord.amount)).scalar() or 0
 
     red = eq.filter(Elder.suspect_type.in_(["疑似冒领", "重复领取"])).count()
-    orange = eq.filter(Elder.suspect_type == "认证过期").count()
+    orange = eq.filter(Elder.certify_status == "认证过期").count()
     yellow = eq.filter(Elder.suspect_type == "信息异常").count()
 
     trend = pq.with_entities(PaymentRecord.pay_month, func.sum(PaymentRecord.amount).label("amt")) \
@@ -537,7 +537,7 @@ def fund(user: User = Depends(get_current_user), s: Session = Depends(get_db)):
 def audit(user: User = Depends(get_current_user), s: Session = Depends(get_db)):
     eq = elder_scope(s, user)
     red = eq.filter(Elder.suspect_type.in_(["疑似冒领", "重复领取"])).count()
-    orange = eq.filter(Elder.suspect_type == "认证过期").count()
+    orange = eq.filter(Elder.certify_status == "认证过期").count()
     yellow = eq.filter(Elder.suspect_type == "信息异常").count()
 
     suspects = eq.filter(Elder.suspect_type != "").order_by(
@@ -724,10 +724,13 @@ def performance(user: User = Depends(get_current_user), s: Session = Depends(get
         .group_by(PaymentRecord.district).order_by(func.sum(PaymentRecord.amount).desc()).all()
     lagged = len(config.RECTIFICATIONS)
     on_time_rate = round((len(config.DISTRICTS) - lagged) / len(config.DISTRICTS) * 100, 1) if config.DISTRICTS else 100.0
+    actual_2026 = pq.filter(PaymentRecord.pay_month >= "2026-01") \
+        .with_entities(func.sum(PaymentRecord.amount)).scalar() or 0
+    exec_rate = round(actual_2026 / config.ANNUAL_BUDGET_2026 * 100, 1) if config.ANNUAL_BUDGET_2026 else 0
     return {
         "kpi": {
             "total_amount": round(total_amount, 0), "avg_month": avg_month, "months": months,
-            "exec_rate": 96.8, "on_time_rate": on_time_rate,
+            "exec_rate": exec_rate, "on_time_rate": on_time_rate,
         },
         "district_fund": [{"district": d, "amount": round(a, 0)} for d, a in district_fund],
         "city_stats": config.CITY_STATS,

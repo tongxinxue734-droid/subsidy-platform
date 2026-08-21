@@ -49,7 +49,7 @@
 
       <!-- 绩效评价 -->
       <el-tab-pane label="绩效评价" name="performance">
-        <el-alert title="预算执行率为演示参考值；及时到账率按区县整改情况动态计算" type="info" show-icon :closable="false" style="margin-bottom:16px" />
+        <el-alert title="预算执行率按 2026 年累计发放 / 年度预算动态计算；及时到账率按区县整改情况动态计算" type="info" show-icon :closable="false" style="margin-bottom:16px" />
         <el-row :gutter="16">
           <el-col :xs="24" :sm="12" :md="6">
             <div class="stat-card">
